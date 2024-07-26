@@ -3,45 +3,35 @@ package dev.diegop88.blogchallenge
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import dev.diegop88.blogchallenge.ui.home.HomeScreen
+import dev.diegop88.blogchallenge.ui.postMessage.PostMessage
 import dev.diegop88.blogchallenge.ui.theme.BlogChallengeTheme
+import dev.diegop88.blogchallenge.utils.Navigation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
-            BlogChallengeTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+            MainScreen()
         }
     }
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
+private fun MainScreen() {
+    val navController = rememberNavController()
     BlogChallengeTheme {
-        Greeting("Android")
+        NavHost(navController = navController, startDestination = Navigation.HOME) {
+            composable(Navigation.HOME) {
+                HomeScreen(navController)
+            }
+            composable(Navigation.NEW_MESSAGE) {
+                PostMessage(navController)
+            }
+        }
     }
 }

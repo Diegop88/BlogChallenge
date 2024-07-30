@@ -18,5 +18,5 @@ interface BlogService {
     suspend fun getUserMessages(@Path("user") user: String): ResponseEntity
 
     @POST(POST_MESSAGE)
-    suspend fun postMessage(@Body newMessageEntity: NewMessageEntity)
+    suspend fun postMessage(@Body newMessageEntity: NewMessageEntity): ResponseEntity
 }
